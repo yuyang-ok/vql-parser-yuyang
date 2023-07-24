@@ -29,6 +29,9 @@ pub fn parse(sql: &str) -> Result<Vec<VQL>, ParserError> {
                 ret.push(VQL::Sql(statement))
             }
         }
+        if parser.peek_token() == Token::SemiColon {
+            parser.next_token();
+        }
     }
     Ok(ret)
 }
@@ -140,7 +143,9 @@ fn test_parse_data_source() {
         DatabaseVersion = '8'
 
     )
- 
+    
+
+    select * from user;
     "#,
     )
     .unwrap();
